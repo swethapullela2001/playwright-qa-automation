@@ -8,7 +8,10 @@ test-results/
 reports/
 playwright-report/
 *.log
-
+# Vim temporary files
+*.swp
+*.swo
+*~
 
 
 
