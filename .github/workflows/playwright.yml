@@ -1,0 +1,65 @@
+
+name: Playwright QA Automation
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  automation-tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Install Chromium
+        run: python -m playwright install --with-deps chromium
+
+      - name: Run UI and API tests
+        run: |
+          mkdir -p reports
+          python -m pytest \
+            test_hotel_json_scenarios.py \
+            test_api_booking_get.py \
+            test_api_booking_post.py \
+            test_api_booking_update.py \
+            test_api_booking_delete.py \
+            test_api_auth_fixture.py \
+            test_api_auth_validation.py \
+            -v \
+            --browser chromium \
+            --html=reports/automation-report.html \
+            --self-contained-html \
+            --screenshot=only-on-failure \
+            --tracing=retain-on-failure \
+            --output=test-results
+
+      - name: Upload test evidence
+        if: always()
+        uses: actions/upload-artifact@v5
+        with:
+          name: qa-automation-results
+          path: |
+            reports/
+            test-results/
+          if-no-files-found: warn
+
+
+

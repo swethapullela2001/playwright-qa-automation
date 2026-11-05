@@ -1,0 +1,28 @@
+
+[
+  {
+    "guest_name": "Swetha",
+    "room": "deluxe",
+    "expected_status": "Booking Confirmed"
+  },
+  {
+    "guest_name": "Arjun",
+    "room": "standard",
+    "expected_status": "Booking Confirmed"
+  },
+  {
+    "guest_name": "Rahul",
+    "room": "suite",
+    "expected_status": "Booking Confirmed"
+  },
+  {
+    "guest_name": "",
+    "room": "deluxe",
+    "expected_status": "Guest Name Required"
+  },
+  {
+    "guest_name": "Priya",
+    "room": "",
+    "expected_status": "Room Selection Required"
+}
+]
